@@ -1,5 +1,6 @@
 package com.example.feettometres;
 
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -20,10 +21,16 @@ public class FeetToMetresActivity extends AppCompatActivity implements OnClickLi
 
     public void onClick(View view)
     {
-        TextView tv = (TextView)findViewById(R.id.tv1);
+        TextView tv = (TextView)findViewById(R.id.tv2);
         EditText et = (EditText)findViewById(R.id.et1);
+        if(et.getText().toString().isEmpty()){
+            new AlertDialog.Builder(this).setPositiveButton("OK", null).setMessage("Please enter a value to convert.").show();
+            return;
+        }
         double feet = Double.parseDouble(et.getText().toString());
         double metres = feet*0.305;
         tv.setText("In metres that is: " + metres);
+
+
     }
 }
