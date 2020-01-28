@@ -7,22 +7,28 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    EditText etx_lat;
+    EditText etx_lon;
+    EditText etx_zoom;
+
+    Button btn_go;
     MapView mv;
+
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // This line sets the user agent, a requirement to download OSM maps
@@ -33,8 +39,32 @@ public class MainActivity extends AppCompatActivity
         mv = findViewById(R.id.map1);
 
         mv.setMultiTouchControls(true);
-        mv.getController().setZoom(16.0);
-        mv.getController().setCenter(new GeoPoint(50.914,-1.333));
+        mv.getController().setZoom(1L);
+        mv.getController().setCenter(new GeoPoint(0L, 0L));
+
+        etx_lat = (EditText) findViewById(R.id.etx_lat);
+        etx_lon = (EditText) findViewById(R.id.etx_lon);
+        etx_zoom = (EditText) findViewById(R.id.etx_zoom);
+
+        btn_go = (Button) findViewById(R.id.btn_go);
+
+        btn_go.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        try {
+            double lat = Double.parseDouble(etx_lat.getText().toString());
+            double lon = Double.parseDouble(etx_lon.getText().toString());
+            double zoom = Double.parseDouble(etx_zoom.getText().toString());
+
+            mv.getController().setZoom(zoom);
+            mv.getController().setCenter(new GeoPoint(lat, lon));
+
+        } catch (Exception e){
+            System.out.println ("An error occurred: " + e);
+        }
+
     }
 }
 
