@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MapView mv;
 
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etx_zoom = (EditText) findViewById(R.id.etx_zoom);
 
         btn_go = (Button) findViewById(R.id.btn_go);
-
         btn_go.setOnClickListener(this);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater=getMenuInflater();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
@@ -68,21 +68,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mv.getController().setZoom(zoom);
             mv.getController().setCenter(new GeoPoint(lat, lon));
 
-        } catch (Exception e){
-            System.out.println ("An error occurred: " + e);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e);
         }
-
     }
 
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.choose_map)
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.choose_map) {
             Intent intent = new Intent(this, MapChooseActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 0);
             return true;
         }
         return false;
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                Bundle extras = intent.getExtras();
+                boolean hikebikemap = extras.getBoolean("com.example.hikebikemap");
+                if (hikebikemap == true) {
+                    mv.setTileSource(TileSourceFactory.HIKEBIKEMAP);
+                } else {
+                    mv.setTileSource(TileSourceFactory.MAPNIK);
+                }
+            }
+        }
+    }
+
 }
 
