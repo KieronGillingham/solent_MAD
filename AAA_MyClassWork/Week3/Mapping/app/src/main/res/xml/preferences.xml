@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="50.914"
+        android:key="lat"
+        android:summary="Latitude to show the map at initially."
+        android:title="Latitude" />
+    <EditTextPreference
+        android:defaultValue="-1.333"
+        android:key="lon"
+        android:summary="Longitude to show the map at initially."
+        android:title="Longitude" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="example_ckb"
+        android:summary="An example of a checkbox preference."
+        android:title="Example Checkbox Preference" />
+    <ListPreference
+        android:entries="@array/pizzaFlavours"
+        android:entryValues="@array/pizzaFlavourCodes"
+        android:key="pizza"
+        android:summary="Choose your pizza flavour."
+        android:title="Pizza flavour" />
+</PreferenceScreen>
+
