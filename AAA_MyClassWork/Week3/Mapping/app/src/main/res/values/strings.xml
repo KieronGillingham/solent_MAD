@@ -8,4 +8,5 @@
     <string name="regular_view">Regular Map</string>
     <string name="hike_bike_map_view">Hiking / Biking Map</string>
     <string name="select_map">Select Map</string>
+    <string name="set_location">Set Location</string>
     </resources>
