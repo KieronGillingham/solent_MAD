@@ -16,10 +16,10 @@
         android:summary="An example of a checkbox preference."
         android:title="Example Checkbox Preference" />
     <ListPreference
-        android:entries="@array/pizzaFlavours"
-        android:entryValues="@array/pizzaFlavourCodes"
-        android:key="pizza"
-        android:summary="Choose your pizza flavour."
-        android:title="Pizza flavour" />
+        android:entries="@array/mapType"
+        android:entryValues="@array/mapTypeValues"
+        android:key="map_type"
+        android:summary="Choose what map you would like to be displayed."
+        android:title="Map Type" />
 </PreferenceScreen>
 
