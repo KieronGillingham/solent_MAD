@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Mapping</string>
+    <string name="go">Go!</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="zoom">Zoom:</string>
+    <string name="choose_map">Choose Map</string>
+    <string name="regular_view">Regular Map</string>
+    <string name="hike_bike_map_view">Hiking / Biking Map</string>
+    <string name="select_map">Select Map</string>
+    <string name="set_location">Set Location</string>
+</resources>
