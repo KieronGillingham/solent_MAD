@@ -37,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         mv = findViewById(R.id.map1);
 
-        //mv.setMultiTouchControls(true);
-        //mv.getController().setZoom(16L);
-        //mv.getController().setCenter(new GeoPoint(51.05, -0.72));
+        Double lat = Double.parseDouble(prefs.getString("lat", "0"));
+        Double lon = Double.parseDouble(prefs.getString("lon", "0"));
+        Double zoom = Double.parseDouble(prefs.getString("zoom", "1L"));
+
+        mv.setMultiTouchControls(true);
+        mv.getController().setZoom(zoom);
+        mv.getController().setCenter(new GeoPoint(lat, lon));
 
     }
 
@@ -79,11 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 throw new Exception("Tile Source: " + mapType + " not recognised.");
             }
 
-            Double lat = Double.parseDouble(prefs.getString("lat", "50.9"));
-            Double lon = Double.parseDouble(prefs.getString("lon", "-1.3"));
-            Double zoom = Double.parseDouble(prefs.getString("zoom", "16L"));
+            Double lat = Double.parseDouble(prefs.getString("lat", "0"));
+            Double lon = Double.parseDouble(prefs.getString("lon", "0"));
 
-            mv.getController().setZoom(zoom);
             mv.getController().setCenter(new GeoPoint(lat, lon));
 
         } catch (

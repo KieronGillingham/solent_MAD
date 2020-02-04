@@ -3,13 +3,18 @@
     <EditTextPreference
         android:defaultValue="50.914"
         android:key="lat"
-        android:summary="Latitude to show the map at initially."
+        android:summary="Latitude to set the map to."
         android:title="Latitude" />
     <EditTextPreference
         android:defaultValue="-1.333"
         android:key="lon"
-        android:summary="Longitude to show the map at initially."
+        android:summary="Longitude to set the map to."
         android:title="Longitude" />
+    <EditTextPreference
+        android:defaultValue="16"
+        android:key="zoom"
+        android:summary="Zoom level to show the map at initially."
+        android:title="Default Zoom" />
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="example_ckb"
