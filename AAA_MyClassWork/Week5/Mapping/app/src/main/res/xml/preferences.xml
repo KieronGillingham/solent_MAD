@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="50.914"
+        android:key="lat"
+        android:summary="Latitude to set the map to initially."
+        android:title="Latitude" />
+    <EditTextPreference
+        android:defaultValue="-1.333"
+        android:key="lon"
+        android:summary="Longitude to set the map to initially."
+        android:title="Longitude" />
+    <EditTextPreference
+        android:defaultValue="16"
+        android:key="zoom"
+        android:summary="Zoom level to show the map at initially."
+        android:title="Default Zoom" />
+    <ListPreference
+        android:entries="@array/mapType"
+        android:entryValues="@array/mapTypeValues"
+        android:key="map_type"
+        android:summary="Choose what map you would like to be displayed by default."
+        android:title="Map Type" />
+</PreferenceScreen>
+

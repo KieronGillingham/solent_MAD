@@ -27,8 +27,18 @@
         <activity
             android:name=".TileListActivity"
             android:label="@string/select_map">
-
         </activity>
+
+        <activity
+            android:name=".SetLocationActivity"
+            android:label="@string/set_location">
+        </activity>
+
+        <activity
+            android:name=".MapPreferenceActivity"
+            android:label="@string/preferences">
+        </activity>
+
     </application>
 
 </manifest>

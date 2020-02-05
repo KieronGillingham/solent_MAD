@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pizzaFlavours">
+        <item>Cheese, Tomato and Mushroom</item>
+        <item>Ham and Pineapple</item>
+        <item>Hot n\'Spicy</item>
+        <item>Seafood</item>
+    </string-array>
+
+    <string-array name="mapType">
+        <item>Default</item>
+        <item>Hike / Bike</item>
+    </string-array>
+    <string-array name="mapTypeValues">
+        <item>MAPNIK</item>
+        <item>HIKEBIKE</item>
+    </string-array>
+</resources>
