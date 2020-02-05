@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
+import android.widget.TextView;
 
 public class TileListActivity extends ListActivity
 {
-    String[] data;
-
+    String[] tileTypes;
+    String[] tileTypeDesc;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        data = new String[] {"Default", "Hikebikemap"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+        tileTypes = new String[] {"Default", "Hikebikemap"};
+        tileTypeDesc = new String[] {"A standard map showing roads.", "A map that includes walking and biking paths."};
+        TileTypeAdapter adapter = new TileTypeAdapter();
         setListAdapter(adapter);
     }
 
@@ -54,12 +56,24 @@ public class TileListActivity extends ListActivity
 
     public class TileTypeAdapter extends ArrayAdapter<String> {
         public TileTypeAdapter() {
-            super(TileListActivity.this, android.R.layout.simple_list_item_1, data);
+            // The array passed in here (tileTypes) is overwritten (as is simple_list_item_1) in getView().
+            // The length of the array, however, determines how many items are on the overwritten list.
+            super(TileListActivity.this, android.R.layout.simple_list_item_1, tileTypes);
         }
 
         public View getView(int index, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+            // convertView is used to recycle view elements that are offscreen for improved performance
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+               view = inflater.inflate(R.layout.tiletypelistentry, parent, false);
+            }
 
+            TextView title = (TextView) view.findViewById(R.id.tiletype_name),
+                     desc = (TextView) view.findViewById(R.id.tiletype_desc);
+            title.setText(tileTypes[index]);
+            desc.setText(tileTypeDesc[index]);
+            return view;
         }
 
     }
