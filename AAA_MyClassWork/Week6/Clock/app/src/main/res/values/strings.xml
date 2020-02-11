@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Clock</string>
+    <string name="time_display">Time set to:</string>
+    <string name="hours_set">Hours:</string>
+    <string name="minutes_set">Minutes:</string>
+    <string name="seconds_set">Seconds:</string>
+    <string name="set_time">Set Time</string>
+</resources>
