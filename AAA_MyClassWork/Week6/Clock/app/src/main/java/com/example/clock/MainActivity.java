@@ -1,5 +1,6 @@
 package com.example.clock;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,12 +39,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int minutes = Integer.parseInt(setMinuteField.getText().toString());
                 int seconds = Integer.parseInt(setSecondField.getText().toString());
 
+                if (hours < 0 || hours > 23) {
+                    throw new TimeException("Hours invalid.");
+                } else if (minutes < 0 || minutes > 59) {
+                    throw new TimeException("Minutes invalid.");
+                } else if (seconds < 0 || seconds > 59) {
+                    throw new TimeException("Seconds invalid.");
+                }
+
                 clock.setTime(hours, minutes, seconds);
 
                 String display = "Time set to: " + clock.toString();
                 timeDisplay.setText(display);
+            } catch (TimeException e) {
+                new AlertDialog.Builder(this).
+                        setPositiveButton("OK", null).
+                        setMessage(e.getExceptionMessage()).show();
             } catch (Exception e) {
-                System.out.println(e);
+                new AlertDialog.Builder(this).
+                        setPositiveButton("OK", null).
+                        setMessage(e.toString()).show();
             }
         }
     }
