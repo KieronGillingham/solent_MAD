@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 BufferedReader reader = new BufferedReader( new FileReader(Environment.getExternalStorageDirectory().getAbsolutePath() + "/output.txt"));
                 String line = "";
                 while ((line = reader.readLine()) != null) {
-                    textPage.append(line);
+                    textPage.append(line + "\n");
                 }
-                new AlertDialog.Builder(this).setMessage("Save successful.").setPositiveButton("Ok", null).show();
+                new AlertDialog.Builder(this).setMessage("Load successful.").setPositiveButton("Ok", null).show();
                 return true;
             } catch (IOException e) {
                 new AlertDialog.Builder(this).setMessage("IOException: " + e.toString()).setPositiveButton("Ok", null).show();
