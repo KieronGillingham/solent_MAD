@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="textedit"
+        android:key="outputfile"
+        android:summary="@string/output_file_desc"
+        android:title="@string/output_file" />
+</PreferenceScreen>

@@ -2,4 +2,7 @@
     <string name="app_name">TextEditor</string>
     <string name="save">Save</string>
     <string name="load">Load</string>
+    <string name="preferences">Preferences</string>
+    <string name="output_file_desc">The name of the file being saved to.</string>
+    <string name="output_file">Output File</string>
 </resources>

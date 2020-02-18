@@ -2,8 +2,12 @@ package com.example.texteditor;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +28,9 @@ import java.io.PrintWriter;
 public class MainActivity extends AppCompatActivity {
 
     EditText textPage;
-    File root = android.os.Environment.getExternalStorageDirectory();
+    File outputFile = null;
+
+    SharedPreferences prefs;
 
     int permissionRequestCode = 0;
 
@@ -41,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String outputFileName = prefs.getString("outputfile", "textedit") + ".txt";
+        outputFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + outputFileName);
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -50,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save) {
             try {
-                PrintWriter pw = new PrintWriter(Environment.getExternalStorageDirectory().getAbsolutePath() + "/output.txt");
+                PrintWriter pw = new PrintWriter(outputFile.getAbsolutePath());
                 pw.println(textPage.getText().toString());
                 pw.flush();
                 pw.close(); // close the file to ensure data is flushed to file
@@ -66,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 textPage.setText("");
 
-                BufferedReader reader = new BufferedReader( new FileReader(Environment.getExternalStorageDirectory().getAbsolutePath() + "/output.txt"));
+                BufferedReader reader = new BufferedReader( new FileReader(outputFile.getAbsolutePath()));
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     textPage.append(line + "\n");
@@ -75,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } catch (IOException e) {
                 new AlertDialog.Builder(this).setMessage("IOException: " + e.toString()).setPositiveButton("Ok", null).show();
+            } catch (Exception e) {
+                new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
+            }
+        } else if (item.getItemId() == R.id.preferences) {
+            try {
+                startActivityForResult(new Intent(this, EditorPreferencesActivity.class), 0);
             } catch (Exception e) {
                 new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
             }
@@ -97,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
         }
     }
 }
