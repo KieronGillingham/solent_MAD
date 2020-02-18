@@ -1,0 +1,7 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/add" android:title="@string/add_contact" />
+    <item android:id="@+id/save" android:title="@string/save_contact" />
+    <item android:id="@+id/load" android:title="@string/load_contact" />
+    <item android:id="@+id/search" android:title="@string/search_contacts" />
+</menu>
