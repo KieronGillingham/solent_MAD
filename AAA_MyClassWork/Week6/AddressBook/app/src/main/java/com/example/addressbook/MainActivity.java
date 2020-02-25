@@ -132,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.load) {
             loadContactsFromFile();
 
+        } else if (item.getItemId() == R.id.search) {
+            searchContactByName();
+
         } else {
             return false;
 
@@ -239,6 +242,28 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (IOException e) {
             new AlertDialog.Builder(this).setMessage("IOException: " + e.toString()).setPositiveButton("Ok", null).show();
+        } catch (Exception e) {
+            new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
+        }
+    }
+
+    void searchContactByName() {
+        try {
+            String firstName = firstNameField.getText().toString(),
+                    lastName = lastNameField.getText().toString();
+
+            if (!firstName.equals("") && !lastName.equals("")) {
+                for (Contact c : contacts) {
+                    if (c.firstName.equals(firstName) && c.lastName.equals(lastName)) {
+                        phoneNumberField.setText(c.contactNumber);
+                        addressField.setText(c.address);
+                        return;
+                    }
+                }
+                new AlertDialog.Builder(this).setMessage("No matching person found in Contacts.").setPositiveButton("Ok", null).show();
+            } else {
+                throw new Exception("Name fields cannot be empty.");
+            }
         } catch (Exception e) {
             new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
         }
