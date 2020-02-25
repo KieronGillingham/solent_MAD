@@ -15,7 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -127,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.save) {
             saveAllContacts();
 
+        } else if (item.getItemId() == R.id.load) {
+            loadContactsFromFile();
+
         } else {
             return false;
 
@@ -205,6 +210,33 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 new AlertDialog.Builder(this).setMessage("No contacts to save.").setPositiveButton("Ok", null).show();
             }
+        } catch (IOException e) {
+            new AlertDialog.Builder(this).setMessage("IOException: " + e.toString()).setPositiveButton("Ok", null).show();
+        } catch (Exception e) {
+            new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
+        }
+    }
+
+    void loadContactsFromFile() {
+        try {
+            int existingContactsCount = contacts.size();
+            contacts.clear();
+
+            BufferedReader reader = new BufferedReader(new FileReader(outputFile.getAbsolutePath()));
+
+            String contactLine;
+            while ((contactLine = reader.readLine()) != null) {
+                String[] contactComp = contactLine.split(",");
+                if (contactComp.length == 4) {
+                    Contact contact = new Contact(contactComp[0], contactComp[1], contactComp[2], contactComp[3]);
+                    contacts.add(contact);
+                } else {
+                    throw new IOException("File format incorrect.");
+                }
+            }
+
+            new AlertDialog.Builder(this).setMessage(contacts.size() + " contact(s) read from file. " + existingContactsCount + " contact(s) overwritten.").setPositiveButton("Ok", null).show();
+
         } catch (IOException e) {
             new AlertDialog.Builder(this).setMessage("IOException: " + e.toString()).setPositiveButton("Ok", null).show();
         } catch (Exception e) {
