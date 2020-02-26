@@ -21,31 +21,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_download) {
-            GetSongs getSongs = new GetSongs(this);
+            GetSongs getSongs = new GetSongs();
             getSongs.execute("http://www.free-map.org.uk/index.php");
         }
     }
 
     // <Input type into AsyncTask, Type that can track progress of task, Type for returned message from AsyncTask>
     public class GetSongs extends AsyncTask<String, Void, String> {
-
-        Context parent;
-
-        public GetSongs(Context p) {
-            parent = p;
-        }
-
-
-        protected void onPreExecute() {
-
-        }
+        protected void onPreExecute() {}
 
         @Override
         protected String doInBackground(String... urls) {
             String message = "";
             try {
                 message += "Attempting to connect to " + urls[0] + ". ";
-                message += "Connection feature not implemented!";
+                message += "Error: Connection feature not implemented!";
             } catch(Exception e) {
                 message += e.toString();
             }
@@ -53,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         protected void onPostExecute(String message) {
-            new AlertDialog.Builder(parent).setMessage(message).setPositiveButton("OK",null).show();
+            new AlertDialog.Builder(MainActivity.this).setMessage(message).setPositiveButton("OK",null).show();
         }
     }
 }
