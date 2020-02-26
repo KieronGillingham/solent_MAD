@@ -1,6 +1,8 @@
 package com.example.musicwebserviceclient;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +22,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.btn_download) {
             GetSongs getSongs = new GetSongs(this);
-            getSongs.execute();
+            getSongs.execute("http://www.free-map.org.uk/index.php");
+        }
+    }
+
+    // <Input type into AsyncTask, Type that can track progress of task, Type for returned message from AsyncTask>
+    public class GetSongs extends AsyncTask<String, Void, String> {
+
+        Context parent;
+
+        public GetSongs(Context p) {
+            parent = p;
+        }
+
+
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String message = "";
+            try {
+                message += "Attempting to connect to " + urls[0] + ". ";
+                message += "Connection feature not implemented!";
+            } catch(Exception e) {
+                message += e.toString();
+            }
+            return message;
+        }
+
+        protected void onPostExecute(String message) {
+            new AlertDialog.Builder(parent).setMessage(message).setPositiveButton("OK",null).show();
         }
     }
 }
