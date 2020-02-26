@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,12 +19,16 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    TextView txtResults;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnDownload = (Button)findViewById(R.id.btn_download);
         btnDownload.setOnClickListener(this);
+        txtResults = (TextView)findViewById(R.id.txt_results);
+
     }
 
     @Override
@@ -69,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return message;
         }
 
-        protected void onPostExecute(String message) {
-            new AlertDialog.Builder(MainActivity.this).setMessage(message).setPositiveButton("OK",null).show();
+        protected void onPostExecute(String results) {
+            txtResults.setText(results);
         }
     }
 }
