@@ -20,12 +20,9 @@ public class GetSongs extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... unused) {
         String message;
-        try
-        {
+        try {
             message = "Connection feature not implemented!";
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             message = e.toString();
         }
         return message;
