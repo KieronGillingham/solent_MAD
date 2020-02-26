@@ -8,6 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -32,12 +39,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected String doInBackground(String... urls) {
+
             String message = "";
+            HttpURLConnection connection = null;
             try {
-                message += "Attempting to connect to " + urls[0] + ". ";
-                message += "Error: Connection feature not implemented!";
+                URL url = new URL(urls[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = connection.getInputStream();
+                int responseCode = connection.getResponseCode();
+                if (responseCode == 200) {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    String result = "", line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    return result;
+                } else {
+                    message += "HTTP ERROR: " + responseCode;
+                }
+            } catch(IOException e) {
+                message += e.toString();
             } catch(Exception e) {
                 message += e.toString();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
             return message;
         }
