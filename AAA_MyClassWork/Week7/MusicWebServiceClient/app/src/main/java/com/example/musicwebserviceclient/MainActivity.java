@@ -20,6 +20,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtResults;
+    EditText etxArtist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnDownload = (Button)findViewById(R.id.btn_download);
         btnDownload.setOnClickListener(this);
         txtResults = (TextView)findViewById(R.id.txt_results);
-
+        etxArtist = (EditText)findViewById(R.id.etx_artist);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_download) {
-            GetSongs getSongs = new GetSongs();
-            getSongs.execute("http://www.free-map.org.uk/index.php");
+            if (etxArtist != null) {
+                GetSongs getSongs = new GetSongs();
+                getSongs.execute(etxArtist.getText().toString());
+            }
         }
     }
 
@@ -44,22 +47,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {}
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... artistName) {
 
             String message = "";
             HttpURLConnection connection = null;
             try {
-                URL url = new URL(urls[0]);
+                URL url = new URL("http://www.free-map.org.uk/course/ws/hits.php?artist=" + artistName[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 int responseCode = connection.getResponseCode();
                 if (responseCode == 200) {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                    String result = "", line;
+                    String results = "", line;
                     while ((line = bufferedReader.readLine()) != null) {
-                        result += line;
+                        results += line;
                     }
-                    return result;
+                    if ("".equals(results)) {
+                        results = "No results found.";
+                    }
+                    return results;
                 } else {
                     message += "HTTP ERROR: " + responseCode;
                 }
