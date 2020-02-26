@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">MusicWebServiceClient</string>
     <string name="download">Download</string>
+    <string name="song_title">Title:</string>
+    <string name="artist">Artist:</string>
+    <string name="year">Year:</string>
+    <string name="upload">Upload</string>
+    <string name="search">Search Hits</string>
+    <string name="add_hit">Add Hit</string>
 </resources>

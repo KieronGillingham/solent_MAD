@@ -2,9 +2,13 @@ package com.example.musicwebserviceclient;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +44,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSongs.execute(etxArtist.getText().toString());
             }
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.search) {
+            return true;
+        } else if (item.getItemId() == R.id.add_hit) {
+            try {
+                startActivityForResult(new Intent(this, AddNewHit.class), 0);
+            } catch (Exception e) {
+                new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
+            }
+        }
+        return false;
     }
 
     // <Input type into AsyncTask, Type that can track progress of task, Type for returned message from AsyncTask>

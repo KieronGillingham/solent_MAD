@@ -3,6 +3,7 @@
     package="com.example.musicwebserviceclient">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--configChanges is a quick-fix to prevent memory leaks between MainActivity and the inner ASyncTask-->
-        <activity android:name=".MainActivity" android:configChanges="orientation|keyboardHidden|screenSize">
+        <activity android:name=".AddNewHit"></activity>
+        <!-- configChanges is a quick-fix to prevent memory leaks between MainActivity and the inner ASyncTask -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

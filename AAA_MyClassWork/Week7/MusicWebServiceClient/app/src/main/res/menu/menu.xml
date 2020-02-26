@@ -1,0 +1,7 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:id="@+id/choose_map" android:title="@string/choose_map"/>
+    <item android:id="@+id/set_loc" android:title="@string/set_location"/> -->
+    <item android:id="@+id/search" android:title="@string/search"/>
+    <item android:id="@+id/add_hit" android:title="@string/add_hit"/>
+</menu>
