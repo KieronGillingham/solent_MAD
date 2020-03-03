@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.search) {
-            return true;
-        } else if (item.getItemId() == R.id.add_hit) {
+        if (item.getItemId() == R.id.add_hit) {
             try {
                 startActivityForResult(new Intent(this, AddNewHit.class), 0);
             } catch (Exception e) {
@@ -75,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String message = "";
             HttpURLConnection connection = null;
             try {
+                // artistName[0] should be validated before being passed as a query string.
                 URL url = new URL("http://www.free-map.org.uk/course/ws/hits.php?artist=" + artistName[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = connection.getInputStream();
