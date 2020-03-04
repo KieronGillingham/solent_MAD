@@ -75,9 +75,31 @@ public class MainActivity extends AppCompatActivity {
             while ((poiString = reader.readLine()) != null) {
                 String[] poiComp = poiString.split(",");
                 if (poiComp.length == 5) {
-                    Double lat = Double.parseDouble(poiComp[4]),
-                            lon = Double.parseDouble(poiComp[3]);
-                    OverlayItem poi = new OverlayItem(poiComp[0] + ", " + poiComp[2], poiComp[1], new GeoPoint(lat, lon));
+                    String title = poiComp[0],
+                            type = poiComp[1],
+                            town = poiComp[2];
+                    Double lon = Double.parseDouble(poiComp[3]),
+                            lat = Double.parseDouble(poiComp[4]);
+                    OverlayItem poi = new OverlayItem(title + ", " + town, type, new GeoPoint(lat, lon));
+
+                    switch (type) {
+                        case "Chinese":
+                            poi.setMarker(this.getDrawable(R.drawable.teashop));
+                            break;
+                        case "Pizza":
+                            poi.setMarker(this.getDrawable(R.drawable.restaurant));
+                            break;
+                        case "pub":
+                            poi.setMarker(this.getDrawable(R.drawable.pub));
+                            break;
+                        case "General":
+                            poi.setMarker(this.getDrawable(R.drawable.cafe));
+                            break;
+                        default:
+                            poi.setMarker(this.getDrawable(R.drawable.marker));
+                            break;
+                    }
+
                     items.addItem(poi);
                 } else {
                     throw new IOException("File format incorrect.");
