@@ -27,25 +27,31 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtResults;
     EditText etxArtist;
+    TextView txtResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
         Button btnDownload = (Button)findViewById(R.id.btn_download);
         btnDownload.setOnClickListener(this);
-        txtResults = (TextView)findViewById(R.id.txt_results);
+
         etxArtist = (EditText)findViewById(R.id.etx_artist);
+        txtResults = (TextView)findViewById(R.id.txt_results);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_download) {
             if (etxArtist != null) {
-                GetSongs getSongs = new GetSongs();
-                getSongs.execute(etxArtist.getText().toString());
+                String searchTerm = etxArtist.getText().toString();
+                if (!"".equals(searchTerm)) {
+                    GetSongs getSongs = new GetSongs();
+                    getSongs.execute(searchTerm);
+                }
             }
         }
     }
@@ -62,9 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivityForResult(new Intent(this, AddNewHit.class), 0);
             } catch (Exception e) {
                 new AlertDialog.Builder(this).setMessage("Exception: " + e.toString()).setPositiveButton("Ok", null).show();
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     // <Input type into AsyncTask, Type that can track progress of task, Type for returned message from AsyncTask>
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if ("".equals(results)) {
                         return "No results found.";
                     }
-                    return results.toString();
+                    message += results.toString();
                 } else {
                     message += "HTTP ERROR: " + responseCode;
                 }
@@ -125,14 +132,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             year = obj.getString("year");
 
                     resultList += id + ": " + song + " by " + artist + " charted in " + year + "\n";
-                    results = resultList;
+                    results += resultList;
                 }
-
-                txtResults.setText(results);
             } catch (JSONException e) {
-                txtResults.setText(e.toString());
+                results += e.toString();
             } catch (Exception e) {
-                txtResults.setText(e.toString());
+                results += e.toString();
+            } finally {
+                txtResults.setText(results);
             }
         }
     }
