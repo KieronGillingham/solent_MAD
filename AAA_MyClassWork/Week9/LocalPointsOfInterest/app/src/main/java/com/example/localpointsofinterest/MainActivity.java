@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         items = new ItemizedIconOverlay<>(this, new ArrayList<OverlayItem>(), markerGestureListener);
         OverlayItem southamptonCC = new OverlayItem("Southampton City Centre", "City Centre in Southampton", new GeoPoint(50.9014, -1.4041));
         // Set display marker for item
-        southamptonCC.setMarker(this.getDrawable(R.drawable.marker_default));
+        southamptonCC.setMarker(this.getDrawable(R.drawable.marker));
         items.addItem(southamptonCC);
         mv.getOverlays().add(items);
     }
