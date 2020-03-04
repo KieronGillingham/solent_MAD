@@ -2,7 +2,13 @@ package com.example.localpointsofinterest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -22,7 +28,7 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
     MapView mv;
     ItemizedIconOverlay<OverlayItem> items;
@@ -37,6 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Required to display osmdroid maps
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+
+        // Required to use location tracking
+        LocationManager locMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         setContentView(R.layout.activity_main);
 
@@ -129,5 +149,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mv.getOverlays().add(items);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
