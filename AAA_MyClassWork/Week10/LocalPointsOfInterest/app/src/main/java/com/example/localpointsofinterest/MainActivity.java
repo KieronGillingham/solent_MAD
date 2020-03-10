@@ -6,12 +6,16 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.GnssStatus;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import org.osmdroid.config.Configuration;
@@ -46,17 +50,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         // Required to use location tracking
         LocationManager locMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    Activity#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
+        /*if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO Consider calling Activity requestPermissions
             return;
+        }*/
+        try {
+            locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 15, this);
+        } catch (SecurityException se){
+            new AlertDialog.Builder(this).setMessage("SecurityException: " + se.toString()).setPositiveButton("Ok", null).show();
         }
-        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         setContentView(R.layout.activity_main);
 
@@ -64,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mv = (MapView) findViewById(R.id.mainMap);
         mv.getController().setZoom(14);
         mv.getController().setCenter(new GeoPoint(50.901, -1.404));
+        mv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
         markerGestureListener = new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
@@ -151,23 +159,29 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mv.getOverlays().add(items);
     }
 
+    // GPS controls
+
     @Override
     public void onLocationChanged(Location location) {
-
+        mv.getController().setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
+        Toast.makeText(this, "New location: " + location.toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        Toast.makeText(this, "New status code: " + status, Toast.LENGTH_LONG).show();
 
     }
 
     @Override
     public void onProviderEnabled(String provider) {
+        Toast.makeText(this, "New provider: " + provider, Toast.LENGTH_LONG).show();
 
     }
 
     @Override
     public void onProviderDisabled(String provider) {
+        Toast.makeText(this, "Lost provider: " + provider, Toast.LENGTH_LONG).show();
 
     }
 }
