@@ -1,0 +1,6 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/london" android:title="@string/london" />
+    <item android:id="@+id/paris" android:title="@string/paris" />
+    <item android:id="@+id/new_york" android:title="@string/new_york" />
+</menu>

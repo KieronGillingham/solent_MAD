@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment class="com.example.fragments.PersonDetailsFragment"
+    <fragment class="com.example.fragments.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/personDetailsFrag">
+        android:id="@+id/mapFrag">
     </fragment>
 
 </LinearLayout>
